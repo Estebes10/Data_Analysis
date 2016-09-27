@@ -38,13 +38,13 @@ def is_ascii(s):
 
 def extract_hashtag(tweet):
     booleano = True
-    line_text = "None"
-    txt = tweet["text"]
-    if all(ord(char) >= 128 for char in txt):
-        booleano = False
-    if booleano == True:
-        print(txt)
-    return txt
+    line_text = ""
+    try:
+        #print("Tweet",tweet["text"])
+        txt = tweet["text"].encode('utf-8')
+        return txt
+    except:
+        return ""
 
 def count_elements(element_dict, element):
     if element in element_dict.keys():
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     start_time = time()
     data_path = "olympics/"
     files = sorted(os.listdir(data_path))
-    n_files = 10
+    n_files = 1
     print(n_files, "compressed files.")
     n_read_files = n_files
     absolute_paths = list(map(lambda fp: data_path + fp, files))
@@ -86,7 +86,6 @@ if __name__ == "__main__":
 '''
     with gzip.open("results/lang_countries." + str(n_read_files) + ".json.gz", "wt") as f:
         json.dump(ensemble, fp=f)
-
     print("Total # of countries:", len(lang_countries))
     print_elapsed_time(start_time, time())
 '''
