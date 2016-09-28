@@ -28,7 +28,7 @@ def search_for_word(tweet, keyword):
         country = tweet["place"]["country_code"]
     try:
         if keyword in text:
-            matched_tweet = {"username":username, "text":text, "country":country, "date":createdAt}
+            matched_tweet = {"country":country, "date":createdAt}
             #matched_tweet.append(str(retweeted))
     except:
         return ""
@@ -43,7 +43,7 @@ def get_tweets(lines):
             print("Ignoring malformed tweet", line, file=sys.stderr)
 
 def process_tweets_file(filename):
-    print("Reading file", filename)
+    #print("Reading file", filename)
     map_result = []
     with gzip.open(filename, "rt") as file:
         lines = filter(lambda l: l != "", map(str.strip, file.readlines()))
@@ -86,10 +86,11 @@ if __name__ == "__main__":
     for item in final_match_map:
         for element in item:
             jsonElements.append(element)
-    print(jsonElements)
-    
+    #print(jsonElements)
+    print("Dumping files...")
     with gzip.open("results/resultsGold.json.gz", "wt") as f:
         json.dump(jsonElements, fp = f)
+    print("FINISHED")
 #    for value in jsonElements:
         #print(value["text"])
  #       print(value)
